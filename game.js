@@ -3,7 +3,7 @@ const P=[100,200,300,500,1000,2000,4000,8000,16000,32000,64000,125000,250000,500
 const ld=(k,d)=>{try{return{...d,...JSON.parse(localStorage[k])}}catch(e){return d}};
 let S=ld("mw_s",{plays:0,best:0,ok:0,bad:0,cats:{},hist:[]}),C=ld("mw_c",{snd:1,tmr:0,voice:0}),g,ac,tid;
 const sv=()=>{try{localStorage.mw_s=JSON.stringify(S);localStorage.mw_c=JSON.stringify(C)}catch(e){}};
-const show=id=>$$(".scr").forEach(e=>e.classList.toggle("on",e.id==id));
+const show=id=>{$(".scr").forEach(e=>e.classList.toggle("on",e.id==id));$("#telegramFab").classList.toggle("visible",id==="home")};
 const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const rnd=(a,b)=>a+Math.random()*(b-a)|0,fmt=n=>n.toLocaleString("en")+" ج.م";
 const beep=(f,d=.15)=>{if(!C.snd)return;try{ac=ac||new AudioContext();const o=ac.createOscillator(),v=ac.createGain();o.frequency.value=f;v.gain.value=.07;o.connect(v);v.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}};
@@ -30,7 +30,7 @@ const progressLines=[
  "خطوة واحدة تفصلك عن القمة. أرني ما لديك."
 ];
 function progressLine(){const n=g.i;if(n>=13)return "السؤال الأخير… المليون أمامك. لا تسمح للتوتر أن يسرق منك اللحظة.";return progressLines[Math.min(12,Math.max(0,n-1))]}
-const hostIntro="مرحبًا بك. أنا الديكتاتور، وسأرافقك حتى السؤال الأخير. هنا لا تُمنح المليون… بل تنتزعها بالإجابة الصحيحة. هل أنت مستعد؟";
+const hostIntro="أهلًا بك في ساحة التحدّي. أمامك أسئلة تتدرّج في الصعوبة، والجائزة لا تُمنح إلا لمن يستحقها. لنرَ إلى أي مدى تصل.";
 $("#cat").innerHTML='<option value="">كل التصنيفات (متنوعة)</option>'+[...new Set(Q.map(q=>q[0]))].map(c=>'<option>'+c+'</option>').join("");
 $$("[data-m]").forEach(b=>b.onclick=()=>start(b.dataset.m));
 $$("[data-l]").forEach(b=>b.onclick=()=>life(b.dataset.l));
@@ -38,12 +38,12 @@ $("#snd").checked=!!C.snd;$("#tmr").checked=!!C.tmr;$("#voice").checked=!!C.voic
 $("#snd").onchange=e=>{C.snd=+e.target.checked;sv()};
 $("#tmr").onchange=e=>{C.tmr=+e.target.checked;sv()};
 $("#voice").onchange=e=>{C.voice=+e.target.checked;sv();if(C.voice)say("تم تفعيل صوت الديكتاتور.")};
-say(hostIntro);
+say(hostIntro);show("home");
 function pick(tier,cat){const c=g.pool.filter(q=>!g.used.has(q)),a=c.filter(q=>q[1]==tier&&(!cat||q[0]==cat)),b=c.filter(q=>q[1]==tier),r=a.length?a:b.length?b:c;return r.length?r[rnd(0,r.length)]:null}
 function start(m){
  const cat=$("#cat").value,pool=Q.filter(q=>!cat||q[0]==cat),n=Math.min(m=="quick"?10:15,pool.length);
  if(!n){say("لا توجد أسئلة كافية في هذا التصنيف.");return}
- g={m,n,i:0,pool,cat,used:new Set(),L:{fifty:1,aud:1,fr:1,skip:1,x:m!="train"?1:0},sel:null,dead:[],lock:0};
+ g={m,n,i:0,pool,cat,used:new Set(),L:{fifty:1,aud:1,fr:1,skip:1},sel:null,dead:[],lock:0};
  show("game");say("بدأ الاختبار. تذكّر: أول سؤال يفتح الباب، أما الأسئلة الأخيرة فتختبر ما وراء المعرفة.");next();
 }
 function next(){g.tier=g.m=="challenge"?(g.i<g.n/2?2:3):Math.min(3,Math.floor(g.i*3/g.n)+1);setQ(pick(g.tier,g.cat),true)}
@@ -68,7 +68,7 @@ async function ans(k){
  const b=ob(),ok=k==g.cpos;
  if(k>=0)b[k].classList.remove("sel");
  if(k>=0)b[k].classList.add(ok?"ok":"bad");
- if(!ok&&g.L.x&&k>=0){g.L.x=0;g.dead.push(k);b[k].disabled=true;$("#info").textContent="فرصة أخيرة! تم استبعاد اختيارك. فكّر جيدًا قبل المحاولة الثانية.";say("تمهّل… لن أُنهي فرصتك بعد. أمامك محاولة أخيرة.");beep(200,.3);g.lock=0;g.sel=null;timer();return}
+ 
  b[g.cpos].classList.add("ok");beep(ok?880:150,.4);S[ok?"ok":"bad"]++;if(ok)S.cats[g.q[0]]=(S.cats[g.q[0]]||0)+1;sv();
  if(ok)say(g.i>=12?"إجابة صحيحة… لم يبقَ بينك وبين المليون إلا القليل.":"إجابة صحيحة. تابع، فالطريق لم ينتهِ.");
  else say("غلط! غلط! غلط! الإجابة لم تكن صحيحة. هذه هي الإجابة الصحيحة، وقد انتهت محاولتك.");
@@ -81,7 +81,7 @@ async function end(k){
  clearInterval(tid);let p=0;if(k=="win")p=prize(g.n-1);else if(k=="quit")p=prize(g.i-1);else if(k=="lose"){const s=safes().filter(x=>x<g.i);p=s.length?prize(Math.max(...s)):0}
  if(g.m=="train")p=0;
  S.plays++;S.best=Math.max(S.best,p);S.hist.unshift({d:new Date().toLocaleDateString("ar"),p,k});S.hist=S.hist.slice(0,10);sv();
- const lines={win:"لقد فعلتها. وصلت إلى المليون! لم يكن الحظ هو من قادك إلى هنا… بل تركيزك وثباتك. تحية من الديكتاتور، لقد استحققتها.",lose:"غلط! غلط! غلط! انتهت اللعبة، لكن لا تجعل خسارة جولة تهزمك. عُد عندما تكون مستعدًا لتحدٍ أصعب.",quit:"انسحبت قبل النهاية… قرارك محفوظ. أحيانًا يكون الانسحاب شجاعة، وأحيانًا يكون خوفًا. أنت وحدك تعرف أيهما كان.",empty:"انتهت الجولة."};
+ const lines={win:"لقد وصلت إلى القمة! هذا ليس حظًا عابرًا. أقف احترامًا لهذا الأداء… تحية تليق بالفائز.",lose:"انتهت الجولة. لا بأس، حتى الأذكياء يخطئون… لكن بعض الإجابات كانت تحتاج إلى إنقاذ عاجل!",quit:"اخترت الانسحاب. قرار ذكي إن كنت تعرف متى تتوقف، أو حذر أكثر مما ينبغي!",empty:"انتهت الجولة."};
  $("#et").textContent=g.m=="train"?"انتهى التدريب":({win:"🏆 المليون لك!",lose:"انتهت اللعبة",quit:"اخترت الانسحاب",empty:"انتهت الجولة."}[k]||"انتهت الجولة");
  $("#ep").textContent=g.m=="train"?"أكملت جولة التدريب. استمر في تطوير معلوماتك.":(k=="lose"?"الإجابة الصحيحة: "+g.q[3][g.q[4]]+" — ":"")+"مبلغك: "+fmt(p);
  $("#endPrize").textContent=fmt(p);show("end");say(g.m=="train"?"انتهى التدريب. أحسنت المحاولة.":lines[k]||lines.empty);beep(k=="win"?1000:260,.5);

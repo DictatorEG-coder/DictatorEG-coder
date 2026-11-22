@@ -1,1 +1,5 @@
-{"appId":"com.example.millionaire","appName":"المليون - تحدي المعرفة","webDir":"www"}
+{
+  "appId": "com.mihakk.quiz",
+  "appName": "مِحَكّ - تحدي المعرفة",
+  "webDir": "www"
+}

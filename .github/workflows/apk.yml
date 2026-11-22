@@ -1,4 +1,4 @@
-name: Build APK
+name: Build AlMillion APK
 on: [push, workflow_dispatch]
 jobs:
   build:
@@ -13,7 +13,7 @@ jobs:
       - run: npm install
       - run: mkdir -p www && cp index.html style.css questions.js game.js www/ && mkdir -p www/assets && cp assets/app-icon.svg www/assets/
       - run: npx cap add android && npx cap sync android
-      - name: Apply Dictator launcher icon
+      - name: Apply Million app icon
         run: |
           for spec in "mdpi 48" "hdpi 72" "xhdpi 96" "xxhdpi 144" "xxxhdpi 192"; do
             set -- $spec
@@ -37,4 +37,4 @@ jobs:
           EOF
       - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
-        with: {name: dictator-millionaire-apk, path: android/app/build/outputs/apk/debug/app-debug.apk}
+        with: {name: almillion-quiz-apk, path: android/app/build/outputs/apk/debug/app-debug.apk}

@@ -23,6 +23,18 @@ jobs:
             rsvg-convert -w "$size" -h "$size" assets/app-icon.svg -o "android/app/src/main/res/mipmap-$density/ic_launcher.png"
             cp "android/app/src/main/res/mipmap-$density/ic_launcher.png" "android/app/src/main/res/mipmap-$density/ic_launcher_round.png"
           done
+          mkdir -p android/app/src/main/res/mipmap-anydpi-v26 android/app/src/main/res/values
+          rsvg-convert -w 432 -h 432 assets/app-icon.svg -o android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png
+          cat > android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml <<'EOF'
+          <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+            <background android:drawable="@color/ic_launcher_background"/>
+            <foreground android:drawable="@mipmap/ic_launcher_foreground"/>
+          </adaptive-icon>
+          EOF
+          cp android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+          cat > android/app/src/main/res/values/ic_launcher_background.xml <<'EOF'
+          <resources><color name="ic_launcher_background">#07132f</color></resources>
+          EOF
       - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
         with: {name: dictator-millionaire-apk, path: android/app/build/outputs/apk/debug/app-debug.apk}

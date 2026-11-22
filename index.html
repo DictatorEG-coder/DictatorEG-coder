@@ -1,0 +1,13 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>من سيربح المليون</title><link rel="stylesheet" href="style.css"></head><body>
+<main id="home" class="scr on"><h1>من سيربح <b>المليون</b>؟</h1>
+<select id="cat"></select>
+<button data-m="classic">الكلاسيكي (15 سؤالًا)</button><button data-m="quick">السريع (10 أسئلة)</button><button data-m="challenge">وضع التحدي</button><button data-m="train">وضع التدريب</button>
+<div class="row"><button class="s" onclick="stats()">الإحصائيات</button><button class="s" onclick="show('set')">الإعدادات</button></div></main>
+<main id="game" class="scr"><div class="top"><span id="lvl"></span><span id="tm"></span><span id="pz"></span></div><div id="lad"></div>
+<div id="qc"></div><div id="qt"></div><div id="opts"></div><div id="info"></div>
+<div class="row"><button id="lock" onclick="lock()">تثبيت</button><button class="s" onclick="undo()">تراجع</button><button class="s" onclick="quit()">انسحاب</button></div>
+<div class="row" id="ll"><button class="s" data-l="fifty">50:50</button><button class="s" data-l="aud">الجمهور</button><button class="s" data-l="fr">صديق</button><button class="s" data-l="skip">تغيير</button></div></main>
+<main id="end" class="scr"><h2 id="et"></h2><p id="ep"></p><button onclick="show('home')">القائمة الرئيسية</button></main>
+<main id="st" class="scr"><h2>الإحصائيات</h2><div id="sb"></div><button onclick="show('home')">رجوع</button></main>
+<main id="set" class="scr"><h2>الإعدادات</h2><label><input type="checkbox" id="snd"> الأصوات</label><label><input type="checkbox" id="tmr"> المؤقت (45 ثانية)</label><button class="s" onclick="reset()">إعادة ضبط الإحصائيات</button><button onclick="show('home')">رجوع</button></main>
+<script src="questions.js"></script><script src="game.js"></script></body></html>

@@ -74,6 +74,7 @@ function timer(){clearInterval(tid);$("#tm").textContent="";if(!C.tmr&&g.m!=="pr
 async function ans(k){
  if(g.lock)return;g.lock=1;clearInterval(tid);$("#lock").disabled=true;const b=ob(),ok=k===g.cpos;
  if(k>=0)b[k].classList.add(ok?"ok":"bad");b[g.cpos].classList.add("ok");b.forEach(x=>x.disabled=true);
+ if(g.q[5])$("#info").textContent="تفسير الإجابة: "+g.q[5];
  beep(ok?900:145,.35);S[ok?"ok":"bad"]++;if(ok)S.cats[g.q[0]]=(S.cats[g.q[0]]||0)+1;sv();
  if(ok){const final=g.i===g.n-1;say(final?choose(reactions.rightFinal):g.tier===3?choose(reactions.rightHard):g.tier===2?choose(reactions.rightMid):choose(reactions.rightEasy))}
  else say(choose(g.tier===1?reactions.wrongEasy:reactions.wrongHard));

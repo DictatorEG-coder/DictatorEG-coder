@@ -1,1 +1,11 @@
-{"name":"millionaire","version":"1.0.0","private":true,"dependencies":{"@capacitor/android":"^6.1.0","@capacitor/cli":"^6.1.0","@capacitor/core":"^6.1.0"}}
+{
+  "name": "mihakk-quiz",
+  "version": "1.1.0",
+  "private": true,
+  "description": "مِحَكّ - تحدي المعرفة",
+  "dependencies": {
+    "@capacitor/android": "^6.1.0",
+    "@capacitor/cli": "^6.1.0",
+    "@capacitor/core": "^6.1.0"
+  }
+}

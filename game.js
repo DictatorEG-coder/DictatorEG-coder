@@ -49,7 +49,7 @@ function start(m){
 function next(){g.tier=g.m=="challenge"?(g.i<g.n/2?2:3):Math.min(3,Math.floor(g.i*3/g.n)+1);setQ(pick(g.tier,g.cat),true)}
 function setQ(q,announce){
  if(!q){end("empty");return}
- g.q=q;g.used.add(q);g.o=sh([0,1,2,3]);g.cpos=g.o.indexOf(q[4]);g.sel=null;g.dead=[];g.lock=0;render();
+ g.q=q;g.used.add(q);g.o=sh([0,1,2,3]);g.cpos=g.o.indexOf(q[4]);g.sel=null;g.dead=[];g.lock=0;render();timer();
  if(announce&&g.i>0)say(progressLine());
 }
 function render(){

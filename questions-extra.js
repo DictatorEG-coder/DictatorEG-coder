@@ -1,7 +1,7 @@
 // بنك موسّع: أسئلة إضافية موزعة على مستويات وصنوف متعددة.
 (()=>{
  const add=(cat,rows,level=2)=>{
-  const answers=rows.map(x=>x[1]);
+  const answers=[...new Set(rows.map(x=>x[1]))];
   rows.forEach(([prompt,answer],i)=>{
    const pool=answers.filter((v,j)=>j!==i);
    const wrong=[];while(wrong.length<3&&pool.length){const k=Math.floor(Math.random()*pool.length);wrong.push(pool.splice(k,1)[0]);}
@@ -139,4 +139,14 @@
  ["ما نوع الهمزة في كلمة «أحمد»؟","همزة قطع"],
  ["ما علامة جزم الفعل المضارع الصحيح الآخر؟","السكون"]
  ]);
+
+ // تنظيف نهائي: منع تكرار السؤال وإزالة أي صف لا يملك أربعة اختيارات مستقلة.
+ const seenPrompts=new Set();
+ const cleanQuestions=Q.filter(q=>{
+  if(!Array.isArray(q)||q.length!==5||!Array.isArray(q[3])||q[3].length!==4||new Set(q[3]).size!==4||!Number.isInteger(q[4])||q[4]<0||q[4]>3)return false;
+  const key=String(q[2]).replace(/[أإآ]/g,"ا").replace(/[ًٌٍَُِّْـ]/g,"").trim();
+  if(seenPrompts.has(key))return false;
+  seenPrompts.add(key);return true;
+ });
+ Q.length=0;Q.push(...cleanQuestions);
 })();

@@ -53,11 +53,11 @@ $("#voice").onchange=e=>{C.voice=+e.target.checked;sv();if(C.voice)say("تم ت�
 say(hostIntro);show("home");
 function pick(tier,cat){const unused=g.pool.filter(q=>!g.used.has(q)),same=unused.filter(q=>q[1]===tier),byCat=unused.filter(q=>!cat||q[0]===cat),category=byCat.filter(q=>q[1]===tier);const list=cat?(category.length?category:byCat):(same.length?same:unused);return list.length?list[rnd(0,list.length)]:null}
 function start(mode){
- const cat=$("#cat").value,pool=Q.filter(q=>!cat||q[0]===cat),target=(mode==="quick"||mode==="pressure")?10:15,n=Math.min(target,pool.length);
+ const cat=mode==="events"?"":$("#cat").value,pool=Q.filter(q=>!cat||q[0]===cat),target=mode==="events"?12:(mode==="quick"||mode==="pressure")?10:15,n=Math.min(target,pool.length);
  if(!n){say("لا توجد أسئلة في هذا التصنيف حاليًا.");return}
  g={m:mode,n,i:0,pool,cat,used:new Set(),L:{fifty:1,aud:1,fr:1},sel:null,dead:[],lock:0};
  show("game");$("#heartLabel").textContent=mode==="train"?"تدريب بلا خسارة":"قلب واحد · إجابة واحدة لكل سؤال";$("#heartLabel").previousElementSibling.style.visibility=mode==="train"?"hidden":"visible";
- say(mode==="pressure"?"بدأ اختبار تحت الضغط. أمامك "+n+" أسئلة، ولك 15 ثانية فقط لكل سؤال. لا تتردد.":"بدأ التحدّي. أمامك "+n+" سؤالًا. تذكّر: لكل سؤال إجابة واحدة، ولا مكان للمحاولة الثانية.");next();
+ say(mode==="pressure"?"بدأ اختبار تحت الضغط. أمامك "+n+" أسئلة، ولك 15 ثانية فقط لكل سؤال. لا تتردد.":mode==="events"?"بدأ تحدّي الفعاليات. أمامك 12 سؤالًا من مجالات مختلفة، ولك 25 ثانية لكل سؤال.":"بدأ التحدّي. أمامك "+n+" سؤالًا. تذكّر: لكل سؤال إجابة واحدة، ولا مكان للمحاولة الثانية.");next();
 }
 function next(){g.tier=g.m==="challenge"?3:Math.min(3,Math.floor(g.i*3/g.n)+1);setQ(pick(g.tier,g.cat),true)}
 function setQ(q,announce){if(!q){end("empty");return}g.q=q;g.used.add(q);g.o=sh([0,1,2,3]);g.cpos=g.o.indexOf(q[4]);g.sel=null;g.dead=[];g.lock=0;render();timer();if(announce&&g.i>0)say(progressLine())}
@@ -70,7 +70,7 @@ function render(){
 }
 const ob=()=>$$('#opts button');
 function pickO(k){if(g.lock||g.dead.includes(k))return;g.sel=k;ob().forEach((b,i)=>b.classList.toggle("sel",i===k));$("#lock").disabled=false;beep(460,.06)}
-function timer(){clearInterval(tid);$("#tm").textContent="";if(!C.tmr&&g.m!=="pressure")return;g.t=g.m==="pressure"?15:45;$("#tm").textContent=g.t+" ث";tid=setInterval(()=>{$("#tm").textContent=(--g.t)+" ث";if(g.t<=0){clearInterval(tid);ans(-1)}},1000)}
+function timer(){clearInterval(tid);$("#tm").textContent="";if(!C.tmr&&g.m!=="pressure"&&g.m!=="events")return;g.t=g.m==="pressure"?15:g.m==="events"?25:45;$("#tm").textContent=g.t+" ث";tid=setInterval(()=>{$("#tm").textContent=(--g.t)+" ث";if(g.t<=0){clearInterval(tid);ans(-1)}},1000)}
 async function ans(k){
  if(g.lock)return;g.lock=1;clearInterval(tid);$("#lock").disabled=true;const b=ob(),ok=k===g.cpos;
  if(k>=0)b[k].classList.add(ok?"ok":"bad");b[g.cpos].classList.add("ok");b.forEach(x=>x.disabled=true);

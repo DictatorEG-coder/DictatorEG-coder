@@ -51,7 +51,7 @@ $("#snd").onchange=e=>{C.snd=+e.target.checked;sv()};
 $("#tmr").onchange=e=>{C.tmr=+e.target.checked;sv()};
 $("#voice").onchange=e=>{C.voice=+e.target.checked;sv();if(C.voice)say("تم تفعيل صوت مقدّم التحدّي.")};
 say(hostIntro);show("home");
-function pick(tier,cat){const unused=g.pool.filter(q=>!g.used.has(q)),same=unused.filter(q=>q[1]===tier),category=same.filter(q=>!cat||q[0]===cat),byCat=unused.filter(q=>!cat||q[0]===cat);const list=category.length?category:same.length?same:byCat.length?byCat:unused;return list.length?list[rnd(0,list.length)]:null}
+function pick(tier,cat){const unused=g.pool.filter(q=>!g.used.has(q)),same=unused.filter(q=>q[1]===tier),byCat=unused.filter(q=>!cat||q[0]===cat),category=byCat.filter(q=>q[1]===tier);const list=cat?(category.length?category:byCat):(same.length?same:unused);return list.length?list[rnd(0,list.length)]:null}
 function start(mode){
  const cat=$("#cat").value,pool=Q.filter(q=>!cat||q[0]===cat),target=mode==="quick"?10:15,n=Math.min(target,pool.length);
  if(!n){say("لا توجد أسئلة في هذا التصنيف حاليًا.");return}

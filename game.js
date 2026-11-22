@@ -8,7 +8,7 @@ const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|
 const rnd=(a,b)=>a+Math.random()*(b-a)|0,fmt=n=>n.toLocaleString("en")+" ج.م";
 const beep=(f,d=.15)=>{if(!C.snd)return;try{ac=ac||new AudioContext();const o=ac.createOscillator(),v=ac.createGain();o.frequency.value=f;v.gain.value=.07;o.connect(v);v.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}};
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
-const prize=i=>i<0?0:P[g.n>1?Math.round(i*14/(g.n-1)):14];
+const prize=i=>i<0?0:P[g.n>1?Math.round(i*14/(g.n-1)):0];
 const safes=()=>g.n<3?[]:[Math.floor(g.n/3)-1,Math.floor(2*g.n/3)-1];
 function say(text){
  ["#hostText","#hostLine","#endLine"].forEach(s=>{const el=$(s);if(el)el.textContent=text});

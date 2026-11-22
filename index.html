@@ -1,10 +1,40 @@
 <!doctype html>
-<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#070b18"><meta name="description" content="من سيربح المليون؟ — اختبر معرفتك وتدرّج نحو القمة."><link rel="icon" type="image/svg+xml" href="assets/app-icon.svg"><title>المليون | تحدّي المعرفة</title><link rel="stylesheet" href="style.css"></head><body>
-<main id="home" class="scr on"><header class="brand"><img src="assets/app-icon.svg" alt="شعار المليون"><div><span class="eyebrow">اختبر حدود معرفتك</span><h1>المليون</h1><p>ليست كل الإجابات متساوية.</p></div></header>
-<section class="host-card"><div class="host-orb">؟</div><div><span class="eyebrow">مقدّم المسابقة</span><strong>المقدّم</strong><p id="hostText"></p></div></section>
-<section class="home-panel"><label class="section-label" for="cat">اختر مجال التحدّي</label><select id="cat" aria-label="تصنيف الأسئلة"></select><div class="mode-grid"><button class="mode-card primary" data-m="classic"><span class="mode-icon">♛</span><b>الكلاسيكي</b><small>15 سؤالًا · محاولة واحدة</small><i>ابدأ التحدي ←</i></button><button class="mode-card" data-m="quick"><span class="mode-icon">⚡</span><b>الجولة السريعة</b><small>10 أسئلة متنوعة</small></button><button class="mode-card" data-m="challenge"><span class="mode-icon">◆</span><b>التحدّي</b><small>مستوى صعب من البداية</small></button><button class="mode-card" data-m="train"><span class="mode-icon">◈</span><b>التدريب</b><small>تعلّم دون خسارة</small></button></div></section>
-<div class="row"><button class="utility" onclick="stats()">الإحصائيات</button><button class="utility" onclick="show('set')">الإعدادات</button></div><p class="footnote">كل سؤال يرفع الرهان. وكل إجابة تكشف مستواك.</p></main>
-<main id="game" class="scr"><div class="top"><span id="lvl"></span><span id="tm"></span><span id="pz"></span></div><div id="lad"></div><section class="host-mini"><span class="host-orb mini">؟</span><span id="hostLine">ركّز جيدًا.</span></section><div id="qc"></div><div id="qt"></div><div id="opts"></div><div id="info"></div><div class="row"><button id="lock" onclick="lock()">تأكيد الإجابة</button><button class="utility" onclick="quit()">انسحاب</button></div><div class="row" id="ll"><button class="utility" data-l="fifty">50:50</button><button class="utility" data-l="aud">الجمهور</button><button class="utility" data-l="fr">صديق</button><button class="utility" data-l="skip">تغيير السؤال</button></div></main>
-<main id="end" class="scr"><div class="end-mark">✦</div><h2 id="et"></h2><div id="endPrize"></div><p id="ep"></p><section class="host-card end-host"><div class="host-orb">؟</div><div><strong>المقدّم</strong><p id="endLine"></p></div></section><button onclick="show('home')">العودة للرئيسية</button></main>
-<main id="st" class="scr"><h2>الإحصائيات</h2><div id="sb"></div><button onclick="show('home')">رجوع</button></main><main id="set" class="scr"><h2>الإعدادات</h2><label><input type="checkbox" id="snd"> المؤثرات الصوتية</label><label><input type="checkbox" id="tmr"> المؤقت (45 ثانية)</label><label><input type="checkbox" id="voice"> صوت المقدّم</label><button class="utility" onclick="reset()">إعادة ضبط الإحصائيات</button><button onclick="show('home')">رجوع</button></main>
-<a class="telegram-fab" id="telegramFab" href="https://t.me/Dictator_channel2" target="_blank" rel="noopener noreferrer" aria-label="قناة تيليجرام"><svg viewBox="0 0 24 24"><path d="M21.5 3.5 18.2 20c-.25 1.16-.92 1.45-1.86.9l-5.15-3.8-2.48 2.39c-.27.27-.5.5-1.02.5l.37-5.25 9.55-8.63c.42-.37-.09-.58-.65-.21L5.15 13.2.08 11.62c-1.1-.35-1.12-1.1.23-1.63L20.1 2.35c.92-.34 1.73.22 1.4 1.15Z"/></svg></a><script src="questions.js"></script><script src="game.js"></script></body></html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090d1b"><meta name="description" content="مِحَكّ — اختبر معرفتك، واصعد في تحدٍ لا يمنح مكانه إلا للأذكياء.">
+<link rel="icon" type="image/svg+xml" href="assets/app-icon.svg"><title>مِحَكّ | تحدّي المعرفة</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+<main id="home" class="scr on">
+ <header class="brand"><img src="assets/app-icon.svg" alt="شعار مِحَكّ"><div><span class="eyebrow">اختبار العقل • تحدّي المعرفة</span><h1>مِحَكّ</h1><p>المعرفة لا تجامل أحدًا.</p></div><span class="brand-mark">01</span></header>
+ <section class="host-card"><div class="host-avatar"><span>م</span><i></i></div><div class="host-copy"><span class="eyebrow">رئيس التحدّي</span><strong>المقدّم</strong><p id="hostText"></p></div><span class="host-status">LIVE</span></section>
+ <section class="home-panel">
+  <div class="panel-heading"><div><span class="eyebrow">اختر ساحة المواجهة</span><h2>من أي باب ستدخل؟</h2></div><span class="panel-symbol">✦</span></div>
+  <label class="section-label" for="cat">مجال الأسئلة</label><select id="cat" aria-label="تصنيف الأسئلة"></select><p id="bankCount" class="bank-count"></p>
+  <div class="mode-grid">
+   <button class="mode-card primary" data-m="classic"><span class="mode-top"><span class="mode-icon">♛</span><span class="mode-tag">النمط الأصلي</span></span><b>الكلاسيكي</b><small>15 سؤالًا · قلب واحد · فرصة واحدة</small><span class="mode-action">ابدأ المواجهة <i>←</i></span></button>
+   <button class="mode-card" data-m="quick"><span class="mode-top"><span class="mode-icon">ϟ</span><span class="mode-tag">10 أسئلة</span></span><b>الجولة السريعة</b><small>اختبار مكثف بإيقاع أسرع</small><span class="mode-action">ابدأ الجولة <i>←</i></span></button>
+   <button class="mode-card" data-m="challenge"><span class="mode-top"><span class="mode-icon">◇</span><span class="mode-tag">نخبة</span></span><b>التحدّي الصعب</b><small>لا تمهيد. يبدأ الاختبار من القمة.</small><span class="mode-action">اختبر نفسك <i>←</i></span></button>
+   <button class="mode-card" data-m="train"><span class="mode-top"><span class="mode-icon">⌘</span><span class="mode-tag">بلا ضغط</span></span><b>وضع التدريب</b><small>تعلّم واكتشف الإجابات دون خسارة.</small><span class="mode-action">ابدأ التدريب <i>←</i></span></button>
+  </div>
+ </section>
+ <div class="home-tools"><button class="utility" onclick="stats()"><span>▤</span> الإحصائيات</button><button class="utility" onclick="show('set')"><span>⚙</span> الإعدادات</button></div>
+ <p class="footnote">كل إجابة تكشف مستوى. وكل خطوة ترفع الرهان.</p>
+</main>
+<main id="game" class="scr">
+ <header class="game-head"><button class="icon-btn" onclick="quit()" aria-label="إنهاء الجولة">×</button><div class="game-meta"><span id="lvl"></span><span id="tm"></span></div><div class="game-prize"><small>رصيدك الحالي</small><strong id="pz"></strong></div></header>
+ <div class="game-status"><span class="heart" aria-label="قلب واحد">♥</span><span id="heartLabel">قلب واحد · فرصة واحدة</span><span class="status-spacer"></span><span id="tierLabel">المستوى الأول</span></div>
+ <div id="lad"></div>
+ <section class="host-mini"><div class="host-avatar mini"><span>م</span><i></i></div><span id="hostLine">ركّز جيدًا.</span></section>
+ <div id="qc"></div><section id="qt"></section><div id="opts"></div><div id="info"></div>
+ <button id="lock" onclick="lock()">اعتماد الإجابة <span>←</span></button>
+ <div class="lifelines" id="ll"><button class="utility" data-l="fifty"><b>½</b><span>حذف إجابتين</span></button><button class="utility" data-l="aud"><b>◉</b><span>رأي الجمهور</span></button><button class="utility" data-l="fr"><b>♧</b><span>اتصال بصديق</span></button></div>
+</main>
+<main id="end" class="scr end-screen"><div class="end-mark">✦</div><span class="eyebrow" id="endKicker">نتيجة المواجهة</span><h2 id="et"></h2><div id="endPrize"></div><p id="ep"></p><section class="host-card end-host"><div class="host-avatar"><span>م</span><i></i></div><div class="host-copy"><strong>المقدّم</strong><p id="endLine"></p></div></section><button class="primary-cta" onclick="show('home')">العودة إلى الرئيسية <span>←</span></button></main>
+<main id="st" class="scr"><header class="sub-head"><span class="eyebrow">ملف اللاعب</span><h2>الإحصائيات</h2></header><div id="sb"></div><button class="primary-cta" onclick="show('home')">رجوع إلى الرئيسية</button></main>
+<main id="set" class="scr"><header class="sub-head"><span class="eyebrow">تفضيلات اللعب</span><h2>الإعدادات</h2></header><div class="settings-card"><label><input type="checkbox" id="snd"> المؤثرات الصوتية</label><label><input type="checkbox" id="tmr"> المؤقت (45 ثانية)</label><label><input type="checkbox" id="voice"> صوت المقدّم</label></div><button class="utility danger" onclick="reset()">إعادة ضبط الإحصائيات</button><button class="primary-cta" onclick="show('home')">حفظ والعودة</button></main>
+<a class="telegram-fab" id="telegramFab" href="https://t.me/Dictator_channel2" target="_blank" rel="noopener noreferrer" aria-label="قناة تيليجرام"><svg viewBox="0 0 24 24"><path d="M21.5 3.5 18.2 20c-.25 1.16-.92 1.45-1.86.9l-5.15-3.8-2.48 2.39c-.27.27-.5.5-1.02.5l.37-5.25 9.55-8.63c.42-.37-.09-.58-.65-.21L5.15 13.2.08 11.62c-1.1-.35-1.12-1.1.23-1.63L20.1 2.35c.92-.34 1.73.22 1.4 1.15Z"/></svg></a>
+<script src="questions.js"></script><script src="questions-extra.js"></script><script src="game.js"></script>
+</body></html>

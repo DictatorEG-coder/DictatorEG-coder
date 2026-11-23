@@ -99,11 +99,29 @@
  if(grammar)grammar[2]="أيّ حرف ناسخ يُستعمل غالبًا لتوكيد الجملة الاسمية عند ابتدائها؟";
  const serve=Q.find(q=>q[2]==="في أي رياضة تُستخدم كلمة «ضربة إرسال»؟");
  if(serve)serve[2]="في أي رياضة تُفتتح الأشواط عادةً بإرسال اللاعب للكرة فوق الشبكة بمضرب؟";
+ // بناء خريطة العناصر من أسئلة العدد الذري والرمز الكيميائي.
+ const elementNumberByName=new Map(),elementSymbolByName=new Map();
+ for(const q of Q){
+  if(q[0]!=="علوم")continue;
+  let m=q[2].match(/العدد الذري لعنصر (.+?) (/);
+  if(m){const n=Number(correct(q));if(Number.isInteger(n))elementNumberByName.set(norm(m[1]),n);}
+  m=q[2].match(/الرمز الكيميائي لعنصر (.+?)؟/);
+  if(m)elementSymbolByName.set(norm(m[1]),String(correct(q)));
+ }
+ const symbolByNumber=new Map();
+ for(const [name,n] of elementNumberByName){const symbol=elementSymbolByName.get(name);if(symbol)symbolByNumber.set(n,symbol);}
  // الأعداد الذرية: استبدال المشتتات البعيدة جدًا بأعداد ذرية مجاورة.
  for(const q of Q){
   if(q[0]==="علوم"&&/العدد الذري/.test(q[2])){
    const n=Number(correct(q));
    if(Number.isInteger(n)&&n>0){const wrong=[n-1,n+1,n+2].filter(x=>x>0).slice(0,3).map(String);while(wrong.length<3)wrong.push(String(n+3+wrong.length));q[3]=[String(n),...wrong];q[4]=0;}
+  }
+ }
+ // رموز العناصر: استخدام رموز عناصر مجاورة في الجدول الدوري بدل رموز عشوائية بعيدة.
+ for(const q of Q){
+  if(q[0]==="علوم"&&/الرمز الكيميائي لعنصر/.test(q[2])){
+   const m=q[2].match(/الرمز الكيميائي لعنصر (.+?)؟/),name=m&&norm(m[1]),n=elementNumberByName.get(name),symbol=elementSymbolByName.get(name);
+   if(Number.isInteger(n)&&symbol){const wrong=[n-1,n+1,n+2].map(z=>symbolByNumber.get(z)).filter(Boolean);if(wrong.length===3){q[3]=[symbol,...wrong];q[4]=0;}}
   }
  }
  const mate=Q.find(q=>q[2]==="ما الرياضة التي يُستخدم فيها مصطلح كش مات؟");

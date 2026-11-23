@@ -31,6 +31,7 @@ function progressLine(){if(g.i>=13)return"السؤال الأخير. سأقف ا
 const reactions={
 wrongEasy:["يا لها من بداية… يبدو أن السؤال كان أذكى من الإجابة!","غلط! غلط! غلط! هل قرأت السؤال أم اكتفيت بالنظر إليه؟","كنت أتوقع الكثير، لكن ليس هذه الإجابة تحديدًا.","سأعتبر ما حدث بروفة… للأسف لا توجد إعادة.","إجابة جريئة. مؤسف أنها خاطئة."],
 wrongHard:["يا للخسارة… كنت على بُعد خطوة من إجابة محترمة.","هذه إجابة واثقة جدًا… والثقة لا تغيّر الحقيقة.","سأصفّق للمحاولة، لا للإجابة. هناك فرق.","حتى أصعب الأسئلة لها إجابة صحيحة… وهذه لم تكن هي."],
+timeout:["انتهى الوقت. يبدو أنك كنت تنتظر أن يجيب السؤال عن نفسه!","الساعة حسمت المواجهة قبل أن تحسمها أنت.","كان أمامك وقت كافٍ… لكن التردد اختار بدلًا منك.","للأسف، الإجابة المتأخرة لا تُحتسب إجابة."],
 rightEasy:["صحيحة. بداية هادئة، فلنرَ إن كنت ستصمد.","أحسنت. نقطة لك، ولا داعي للاحتفال بعد.","إجابة سليمة. يبدو أنك حضرت مستعدًا."],
 rightMid:["ممتاز. بدأت أرى تركيزًا حقيقيًا.","إجابة في محلها. استمر بهذا الاتزان.","جيد جدًا. لا تترك الحماس يسبق التفكير."],
 rightHard:["استثنائية! سأرتدي الزي الرسمي وأصفّق احترامًا لعظمة هذه الإجابة.","يا لها من إجابة! وقفة احترام وتصفيق مستحق.","هذا ليس تخمينًا… هذا مستوى يُرفع له القبّعـة. أحسنت.","أعترف بها: إجابة من العيار الثقيل. تصفيق!"],
@@ -72,12 +73,12 @@ const ob=()=>$$('#opts button');
 function pickO(k){if(g.lock||g.dead.includes(k))return;g.sel=k;ob().forEach((b,i)=>b.classList.toggle("sel",i===k));$("#lock").disabled=false;beep(460,.06)}
 function timer(){clearInterval(tid);$("#tm").textContent="";if(!C.tmr&&g.m!=="pressure"&&g.m!=="events")return;g.t=g.m==="pressure"?15:g.m==="events"?25:45;$("#tm").textContent=g.t+" ث";tid=setInterval(()=>{$("#tm").textContent=(--g.t)+" ث";if(g.t<=0){clearInterval(tid);ans(-1)}},1000)}
 async function ans(k){
- if(g.lock)return;g.lock=1;clearInterval(tid);$("#lock").disabled=true;const b=ob(),ok=k===g.cpos;
+ if(g.lock)return;g.lock=1;clearInterval(tid);$("#lock").disabled=true;const b=ob(),ok=k===g.cpos;if(k<0)g.timeout=true;
  if(k>=0)b[k].classList.add(ok?"ok":"bad");b[g.cpos].classList.add("ok");b.forEach(x=>x.disabled=true);
  if(g.q[5])$("#info").textContent="تفسير الإجابة: "+g.q[5];
  beep(ok?900:145,.35);S[ok?"ok":"bad"]++;if(ok)S.cats[g.q[0]]=(S.cats[g.q[0]]||0)+1;sv();
  if(ok){const final=g.i===g.n-1;say(final?choose(reactions.rightFinal):g.tier===3?choose(reactions.rightHard):g.tier===2?choose(reactions.rightMid):choose(reactions.rightEasy))}
- else say(choose(g.tier===1?reactions.wrongEasy:reactions.wrongHard));
+ else say(choose(k<0?reactions.timeout:g.tier===1?reactions.wrongEasy:reactions.wrongHard));
  await wait(ok?1450:1900);
  if(ok||g.m==="train"){if(g.i>=g.n-1)return end("win");g.i++;next()}else end("lose");
 }
@@ -87,9 +88,9 @@ async function end(kind){
  clearInterval(tid);let amount=0;if(kind==="win")amount=prize(g.n-1);else if(kind==="quit")amount=prize(g.i-1);else if(kind==="lose"){const s=safes().filter(x=>x<g.i);amount=s.length?prize(Math.max(...s)):0}if(g.m==="train")amount=0;
  S.plays++;S.best=Math.max(S.best,amount);S.hist.unshift({d:new Date().toLocaleDateString("ar"),p:amount,k:kind});S.hist=S.hist.slice(0,12);sv();
  const titles={win:"تستحق هذه الوقفة!",lose:"انتهت المواجهة",quit:"اخترت الانسحاب",empty:"انتهت الجولة"};
- const lines={win:choose(reactions.rightFinal),lose:"انتهت الجولة. كنت تملك قلبًا واحدًا، وقد استُخدم. لا بأس… عُد أكثر استعدادًا، فالسؤال القادم لن ينتظرك.",quit:"انسحبت قبل النهاية. أحيانًا يكون التوقف قرارًا حكيمًا، لكنني كنت أريد رؤية المزيد.",empty:"لا توجد أسئلة أخرى في هذا التصنيف."};
+ const lines={win:choose(reactions.rightFinal),lose:choose(g.timeout?["انتهى الوقت، وضاعت المواجهة قبل اعتماد إجابتك. حتى الصمت كان اختيارًا في هذه الجولة.","لم تخسر لأن الإجابة كانت مستحيلة؛ خسرت لأن الوقت انتهى وأنت ما زلت تفكر.","الوقت لا يمنح تمديدًا للمتحيرين. انتهت المواجهة."]:["قلب واحد وقد استُهلك. لا إعادة ولا أعذار؛ عد عندما تكون مستعدًا.","كنت تملك فرصة واحدة، وقد أهدرتها. سأنتظر عودتك… إن كنت تنوي التعلم من الخطأ.","إجابة واحدة كانت تفصلك عن الاستمرار، لكنك اخترت الخطأ. انتهت المواجهة."]),quit:"انسحبت قبل النهاية. أحيانًا يكون التوقف قرارًا حكيمًا، لكنني كنت أريد رؤية المزيد.",empty:"لا توجد أسئلة أخرى في هذا التصنيف."};
  $("#et").textContent=g.m==="train"?"انتهى التدريب":titles[kind]||titles.empty;$("#endKicker").textContent=kind==="win"?"إنجاز يُحترم":kind==="lose"?"قلب واحد. قرار واحد.":"نتيجة المواجهة";
- $("#ep").textContent=g.m==="train"?"أنهيت جولة التدريب. المعرفة تتراكم بالمحاولة والتعلّم.":(kind==="lose"?"الإجابة الصحيحة: "+g.q[3][g.q[4]]+" · ":"")+"رصيدك النهائي: "+fmt(amount);
+ $("#ep").textContent=g.m==="train"?"أنهيت جولة التدريب. المعرفة تتراكم بالمحاولة والتعلّم.":(kind==="lose"?(g.timeout?"انتهى الوقت · ":"الإجابة الصحيحة: "+g.q[3][g.q[4]]+" · "):"")+"رصيدك النهائي: "+fmt(amount);
  $("#endPrize").textContent=fmt(amount);show("end");say(g.m==="train"?"انتهى التدريب. أحسنت المحاولة.":lines[kind]||lines.empty);beep(kind==="win"?1050:250,.5);
 }
 function life(type){

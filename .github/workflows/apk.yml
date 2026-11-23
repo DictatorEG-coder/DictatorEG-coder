@@ -11,7 +11,7 @@ jobs:
         with: {distribution: temurin, java-version: 17}
       - run: sudo apt-get update && sudo apt-get install -y imagemagick librsvg2-bin
       - run: npm install
-      - run: mkdir -p www && cp index.html style.css questions.js questions-extra.js game.js www/ && mkdir -p www/assets && cp assets/app-icon.svg www/assets/
+      - run: mkdir -p www && cp index.html style.css questions.js questions-extra.js questions-curated.js game.js www/ && mkdir -p www/assets && cp assets/app-icon.svg www/assets/
       - run: npx cap add android && npx cap sync android
       - name: Apply Mihakk launcher icon
         run: |

@@ -264,6 +264,30 @@
  const deku=Q.find(q=>q[2]==="من البطل الذي ورّث ديكو كيرك «وان فور أول»؟");
  if(deku)deku[2]="من الذي ورّث إيزوكو ميدوريا كويرك «وان فور أول»؟";
  const linux=Q.find(q=>q[2]==="من أنشأ نواة نظام التشغيل لينكس؟");if(linux)linux[0]="تقنية";
+ const hinokami=Q.find(q=>q[2]==="ما اسم تقنية تانجيرو الأصلية الأسطورية؟");
+ if(hinokami)hinokami[2]="ما الاسم الذي يُطلق على الرقصة التي ورثها تانجيرو عن عائلته؟";
+ const sleepDetective=Q.find(q=>q[2]==="من المحقق النائم والد ران؟");
+ if(sleepDetective){sleepDetective[3]=["كوغورو موري","الدكتور أغاسا","هيجي هاتوري","المفتش ميغوري"];sleepDetective[4]=0;}
+ const blueLockCoach=Q.find(q=>q[2]==="من مدرب مشروع Blue Lock؟");
+ if(blueLockCoach){blueLockCoach[3]=["إيغو جينباتشي","نول نوا","كريس برينس","مارك سنوفي"];blueLockCoach[4]=0;}
+ const shigaraki=Q.find(q=>q[2]==="ما اسم كيرك تومورا شيغاراكي؟");
+ if(shigaraki){shigaraki[3]=["التفتت","الانفجار","الجاذبية الصفرية","الصلابة"];shigaraki[4]=0;shigaraki[2]="ما اسم الكويرك الخاص بتومورا شيغاراكي؟";}
+ const uraraka=Q.find(q=>q[2]==="ما اسم كيرك أوراراكا؟");
+ if(uraraka)uraraka[2]="ما اسم الكويرك الخاص بأوتشاكو أوراراكا؟";
+ const iida=Q.find(q=>q[2]==="ما اسم كيرك إيدا؟");
+ if(iida)iida[2]="ما اسم الكويرك الخاص بتينيا إيدا؟";
+ const kirishima=Q.find(q=>q[2]==="ما اسم كيرك كيريشيما؟");
+ if(kirishima)kirishima[2]="ما اسم الكويرك الخاص بإيجيرو كيريشيما؟";
+ const momo=Q.find(q=>q[2]==="ما اسم كيرك مومو ياويوروزو؟");
+ if(momo)momo[2]="ما اسم الكويرك الخاص بمومو ياويوروزو؟";
+ const bakugoHero=Q.find(q=>q[2]==="ما اسم البطل لبكوغو؟");
+ if(bakugoHero)bakugoHero[2]="ما الاسم البطولي الذي اختاره كاتسوكي باكوغو؟";
+ const hunterGhoul=Q.find(q=>q[2]==="ما اسم الأعضاء الصائدة لدى الغيلان؟");
+ if(hunterGhoul)hunterGhoul[2]="ما اسم العضو الحيوي الذي تستخدمه الغيلان في القتال؟";
+ const isagi=Q.find(q=>q[2]==="ما اسم بطل Blue Lock؟");
+ if(isagi&&isagi[3])isagi[3]=["يويتشي إيساغي","ميغورو باتشيرا","سيشيرو ناغي","ريو ميكاغي"];
+ const bleachBoss=Q.find(q=>q[2]==="من العدو الرئيسي في قوس الحرب الدموية الألفية؟");
+ if(bleachBoss&&bleachBoss[3])bleachBoss[3]=["يهواخ","آيزن","غريمجو","كينباتشي زاراكي"];
  const monotreme=Q.find(q=>q[2]==="أي حيوان ثديي يبيض؟");
  if(monotreme)monotreme[2]="أي حيوان ثديي شبه مائي يبيض وله منقار يشبه البط؟";
  const polarBear=Q.find(q=>q[2]==="أكبر أنواع الدببة هو:");

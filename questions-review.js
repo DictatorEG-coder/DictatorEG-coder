@@ -103,8 +103,8 @@
  const elementNumberByName=new Map(),elementSymbolByName=new Map();
  for(const q of Q){
   if(q[0]!=="علوم")continue;
-  let m=q[2].match(/العدد الذري لعنصر (.+?) (/);
-  if(m){const n=Number(correct(q));if(Number.isInteger(n))elementNumberByName.set(norm(m[1]),n);}
+  const prefix="العدد الذري لعنصر ",end=q[2].indexOf(" (",prefix.length);
+  if(q[2].startsWith(prefix)&&end>prefix.length){const n=Number(correct(q));if(Number.isInteger(n))elementNumberByName.set(norm(q[2].slice(prefix.length,end)),n);}
   m=q[2].match(/الرمز الكيميائي لعنصر (.+?)؟/);
   if(m)elementSymbolByName.set(norm(m[1]),String(correct(q)));
  }

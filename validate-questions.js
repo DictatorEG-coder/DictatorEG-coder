@@ -12,7 +12,7 @@ const context = vm.createContext({
   }
 });
 
-for (const file of ["questions.js", "questions-extra.js", "questions-curated.js", "questions-source.js"]) {
+for (const file of ["questions.js", "questions-extra.js", "questions-curated.js", "questions-source.js", "questions-review.js"]) {
   vm.runInContext(fs.readFileSync(file, "utf8"), context, { filename: file });
 }
 

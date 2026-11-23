@@ -160,7 +160,7 @@
  // أسماء العناصر ذات العدد الذري: اختيار عناصر مجاورة في الجدول الدوري.
  for(const q of Q){
   if(q[0]==="علوم"&&/ما العنصر الذي عدده الذري/.test(q[2])){
-   const m=q[2].match(/عدده الذري (\\d+)/),n=m?Number(m[1]):NaN,answer=correct(q);
+   const m=q[2].match(/عدده الذري (\d+)/),n=m?Number(m[1]):NaN,answer=correct(q);
    if(Number.isInteger(n)){const wrong=[n-1,n+1,n+2,n+3].map(z=>elementNameByNumber.get(z)).filter(Boolean).slice(0,3);if(wrong.length===3){q[3]=[answer,...wrong];q[4]=0;}}
   }
  }

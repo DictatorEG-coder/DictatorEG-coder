@@ -253,8 +253,16 @@
  for(const q of Q){if(extraPromptRewrites[q[2]])q[2]=extraPromptRewrites[q[2]];}
  const sword=Q.find(q=>q[2]==="ما اسم سيف ساسكي؟");
  if(sword){sword[3]=["كوساناغي","ساميهـادا","كوبيكيريبوتشو","إنما"];sword[4]=0;}
+ const doflamingo=Q.find(q=>q[2]==="من الشيشيبوكاي الذي واجهه لوفي في دريسروزا؟");
+ if(doflamingo&&doflamingo[3])doflamingo[3]=["دونكيهوتي دوفلامينغو","كروكودايل","كوما","جينبي"];
  const zeke=Q.find(q=>q[2]==="ما اسم أخي إيرن غير الشقيق؟");
  if(zeke){zeke[3]=["زيك ياغر","غريشا ياغر","راينر براون","فلوخ فورستر"];zeke[4]=0;}
+ const bakugo=Q.find(q=>q[2]==="ما اسم كيرك بكوغو؟");
+ if(bakugo)bakugo[2]="ما اسم الكويرك الخاص بكاتسوكي باكوغو؟";
+ const todoroki=Q.find(q=>q[2]==="ما اسم كيرك تودوروكي؟");
+ if(todoroki)todoroki[2]="ما اسم الكويرك الخاص بشوتو تودوروكي؟";
+ const deku=Q.find(q=>q[2]==="من البطل الذي ورّث ديكو كيرك «وان فور أول»؟");
+ if(deku)deku[2]="من الذي ورّث إيزوكو ميدوريا كويرك «وان فور أول»؟";
  const linux=Q.find(q=>q[2]==="من أنشأ نواة نظام التشغيل لينكس؟");if(linux)linux[0]="تقنية";
  const monotreme=Q.find(q=>q[2]==="أي حيوان ثديي يبيض؟");
  if(monotreme)monotreme[2]="أي حيوان ثديي شبه مائي يبيض وله منقار يشبه البط؟";

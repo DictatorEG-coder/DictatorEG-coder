@@ -151,6 +151,7 @@
  const symbolByNumber=new Map(),numberBySymbol=new Map();
  for(const [name,n] of elementNumberByName){const symbol=elementSymbolByName.get(name);if(symbol){symbolByNumber.set(n,symbol);numberBySymbol.set(symbol,n);}}
  const elementNameByNumber=new Map();
+ for(const [name,n] of elementNumberByName)elementNameByNumber.set(n,name);
  for(const q of Q){
   if(q[0]==="علوم"){
    const m=q[2].match(/رمزه الكيميائي (.+?)؟/);

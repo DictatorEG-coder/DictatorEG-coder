@@ -121,7 +121,7 @@
  for(const q of Q){
   if(q[0]==="علوم"&&/الرمز الكيميائي لعنصر/.test(q[2])){
    const m=q[2].match(/الرمز الكيميائي لعنصر (.+?)؟/),name=m&&norm(m[1]),n=elementNumberByName.get(name),symbol=elementSymbolByName.get(name);
-   if(Number.isInteger(n)&&symbol){const wrong=[n-1,n+1,n+2].map(z=>symbolByNumber.get(z)).filter(Boolean);if(wrong.length===3){q[3]=[symbol,...wrong];q[4]=0;}}
+   if(Number.isInteger(n)&&symbol){const wrong=[n-1,n+1,n+2,n+3].map(z=>symbolByNumber.get(z)).filter(Boolean).slice(0,3);if(wrong.length===3){q[3]=[symbol,...wrong];q[4]=0;}}
   }
  }
  const mate=Q.find(q=>q[2]==="ما الرياضة التي يُستخدم فيها مصطلح كش مات؟");

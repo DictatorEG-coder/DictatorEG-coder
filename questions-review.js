@@ -8,6 +8,8 @@
  const invalidCapitalNames=new Set(["قرطبة","الولايات المتحدة","السين","التيمز","التيبر","بردى"]);
  const capitals=collect(q=>/عاصمة/.test(q[2])&&q[0]!=="مدن وعواصم").filter(x=>!invalidCapitalNames.has(x));
  const authors=collect(q=>["أدب","كتب وروايات"].includes(q[0])&&/(مؤلف|من كتب|كتب رواية|صاحب رواية|صاحب كتاب|الشاعر|شاعر|معلقة)/.test(q[2]));
+ const countries=collect(q=>q[0]==="مدن وعواصم"&&String(q[2]).startsWith("مدينة "));
+ const rivers=["النيل","دجلة","الفرات","الأمازون","الكونغو","النيجر","الزمبيزي","الأورينوكو","البارانا","المسيسيبي","اليانغتسي","السين","التيمز","الراين","الدانوب","نهر الأردن","بردى","ساو فرانسيسكو","الميكونغ","الفولغا"];
  const proverbs=collect(q=>q[0]==="أمثال شعبية");
  const riddles=collect(q=>q[0]==="ألغاز وحزازير");
  function alternatives(pool,answer,prompt,old){
@@ -79,6 +81,8 @@
   const answer=correct(q),old=q[3].filter((_,i)=>i!==q[4]);
   let wrong=null;
   if(manual[q[2]]) wrong=manual[q[2]];
+  else if(q[0]==="جغرافيا"&&/أي دولة عاصمتها/.test(q[2])) wrong=alternatives(countries,answer,q[2],old);
+  else if(q[0]==="جغرافيا"&&/نهر/.test(q[2])) wrong=alternatives(rivers,answer,q[2],old);
   else if(["جغرافيا","عامة"].includes(q[0])&&/عاصمة/.test(q[2])){
    const region=regionFor(q[2]),pool=region?regionalCapitalNames[region]:capitals;
    wrong=alternatives(pool||capitals,answer,q[2],old);
@@ -132,6 +136,12 @@
  if(egyptWeekend)egyptWeekend[2]="ما اليوم الذي تبدأ به عطلة نهاية الأسبوع في مصر عادةً؟";
  const eu=Q.find(q=>q[2]==="أي مدينة هي عاصمة الاتحاد الأوروبي الإدارية غالبًا؟");
  if(eu)eu[2]="في أي مدينة يقع المقر الرئيسي للمفوضية الأوروبية؟";
+ const korea=Q.find(q=>q[2]==="في أي قارة تقع دولة كوريا؟");
+ if(korea)korea[2]="في أي قارة تقع شبه الجزيرة الكورية؟";
+ const koreaSouth=Q.find(q=>q[2]==="في أي قارة تقع دولة الجنوبية؟");
+ if(koreaSouth)koreaSouth[2]="في أي قارة تقع كوريا الجنوبية؟";
+ const koreaNorth=Q.find(q=>q[2]==="في أي قارة تقع دولة الشمالية؟");
+ if(koreaNorth)koreaNorth[2]="في أي قارة تقع كوريا الشمالية؟";
  const magellan=Q.find(q=>q[2]==="من القائد البرتغالي الذي قاد أول بعثة بحرية طافت حول العالم؟");
  if(magellan)magellan[2]="من القائد البرتغالي الذي بدأ أول بعثة بحرية للدوران حول العالم؟";
  const mate=Q.find(q=>q[2]==="ما الرياضة التي يُستخدم فيها مصطلح كش مات؟");

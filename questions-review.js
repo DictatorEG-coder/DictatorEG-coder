@@ -108,9 +108,9 @@
  for(const q of Q){
   if(q[0]!=="علوم")continue;
   const prefix="العدد الذري لعنصر ",pos=q[2].indexOf(prefix),end=q[2].indexOf(" (",pos+prefix.length);
-  if(pos>=0&&end>pos+prefix.length){const n=Number(correct(q));if(Number.isInteger(n))elementNumberByName.set(norm(q[2].slice(pos+prefix.length,end)),n);}
+  if(pos>=0&&end>pos+prefix.length){const n=Number(correct(q));if(Number.isInteger(n))elementNumberByName.set(norm(q[2].slice(pos+prefix.length,end)).replace(/^ال/,""),n);}
   m=q[2].match(/الرمز الكيميائي لعنصر (.+?)؟/);
-  if(m)elementSymbolByName.set(norm(m[1]),String(correct(q)));
+  if(m)elementSymbolByName.set(norm(m[1]).replace(/^ال/,""),String(correct(q)));
  }
  const symbolByNumber=new Map();
  for(const [name,n] of elementNumberByName){const symbol=elementSymbolByName.get(name);if(symbol)symbolByNumber.set(n,symbol);}
@@ -124,7 +124,7 @@
  // رموز العناصر: استخدام رموز عناصر مجاورة في الجدول الدوري بدل رموز عشوائية بعيدة.
  for(const q of Q){
   if(q[0]==="علوم"&&/الرمز الكيميائي لعنصر/.test(q[2])){
-   const m=q[2].match(/الرمز الكيميائي لعنصر (.+?)؟/),name=m&&norm(m[1]),n=elementNumberByName.get(name),symbol=elementSymbolByName.get(name);
+   const m=q[2].match(/الرمز الكيميائي لعنصر (.+?)؟/),name=m&&norm(m[1]).replace(/^ال/,""),n=elementNumberByName.get(name),symbol=elementSymbolByName.get(name);
    if(Number.isInteger(n)&&symbol){const wrong=[n-1,n+1,n+2,n+3].map(z=>symbolByNumber.get(z)).filter(Boolean).slice(0,3);if(wrong.length===3){q[3]=[symbol,...wrong];q[4]=0;}}
   }
  }

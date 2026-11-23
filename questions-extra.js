@@ -164,14 +164,14 @@
    [/مؤلف|من كتب|من صاحب|صاحب رواية|الشاعر الملقب|من الشاعر|أول عربي نال/,"author"],
    [/كم عدد لاعبي.*كرة القدم|كم لاعبًا من كل فريق/,"football-players"],[/مدة مباراة كرة القدم/,"football-duration"],
    [/أشواط مباراة كرة السلة/,"basketball-periods"],[/لاعبي فريق الكرة الطائرة/,"volleyball-players"],
-   [/بطل أنمي|بطل ون بيس|بطل هجوم العمالقة|بطل Hunter|بطل Dragon Ball|بطل Jujutsu|بطل Vinland|بطل Code Geass|اسم المحقق المعروف/,"anime-character"],
+   [/بطل أنمي|بطل ون بيس|بطل هجوم العمالقة|بطل Hunter|بطل Dragon Ball|بطل Jujutsu|بطل Vinland|بطل Code Geass/,"anime-character"],
    [/قرية ناروتو|القرية التي ينتمي إليها ناروتو/,"anime-village"],[/لقب إدوارد/,"anime-title"],
    [/Monster|يوهان|المحقق الذي يلاحق/,"monster-character"],[/فاكهة الشيطان/,"anime-fruit"],[/طاقم ينتمي إليه|قائد قراصنة/,"one-piece-crew"],
    [/عشيرة أوتشيها/,"uchiha"],[/التحول الذي ظهر به غوكو/,"dragonball-form"],[/اسم ابن غوكو/,"dragonball-family"],
    [/من أخرج/,"director"],[/مدرسة السحر/,"fictional-school"],[/مطرقة الشهيرة لثور/,"fictional-weapon"],[/درع.*كابتن أمريكا/,"fictional-shield"],
    [/اللغة الرسمية/,"language"],[/لغة الاستعلام/,"database-language"],[/تنسيق صفحات الويب|بناء هيكل صفحة الويب/,"web-language"],
    [/ماذا تعني|اختصار الذاكرة/,"technology-acronym"],[/الشركة المطورة|الشركة التي طورت|الشركة التي استحوذت/,"technology-company"],
-   [/البروتوكول المستخدم لإرسال البريد/,"email-protocol"],[/النظام الذي يدير أسماء النطاقات/,"dns"],[/التقنية التي تتيح الاتصال|التقنية المستخدمة للدفع/,"wireless-tech"],[/نظام التحكم بالإصدارات|منصة الأشهر لاستضافة/,"git-tools"],[/امتداد ملفات بايثون|امتداد ملفات صفحات الويب/,"file-extension"],[/نظام تشغيل آيفون/,"mobile-os"],[/معنى VPN/,"vpn"],[/متجر تطبيقات أندرويد/,"app-store"],[/اختصار الذاكرة للقراءة فقط/,"memory-type"],
+   [/البروتوكول المستخدم لإرسال البريد/,"email-protocol"],[/النظام الذي يدير أسماء النطاقات/,"dns"],[/التقنية التي تتيح الاتصال|التقنية المستخدمة للدفع/,"wireless-tech"],[/نظام التحكم بالإصدارات|منصة الأشهر لاستضافة/,"git-tools"],[/امتداد ملفات بايثون/,"python-extension"],[/امتداد ملفات صفحات الويب/,"web-extension"],[/نظام تشغيل آيفون/,"mobile-os"],[/معنى VPN/,"vpn"],[/متجر تطبيقات أندرويد/,"app-store"],[/اختصار الذاكرة للقراءة فقط/,"memory-type"],
    [/البروتوكول|النظام الذي يدير|التقنية التي تتيح|التقنية المستخدمة|نظام التحكم بالإصدارات|منصة الأشهر|امتداد ملفات|نظام تشغيل آيفون|معنى VPN|متجر تطبيقات/,"technology"],
    [/معنى المثل|المقصود بقولهم|دلالة المثل/,"proverb"],
    [/اسم البطولة الأوروبية السنوية/,"football-tournament"],[/أي نادٍ|ما النادي|ما الدولة التي ينتمي إليها نادي/,"football-club"],[/أي منتخب فاز|من المنتخب الذي فاز|المنتخب المعروف بلقب/,"football-winner"],[/اسم ملعب/,"football-stadium"],
@@ -204,6 +204,15 @@
   return cat+"-other";
  };
  const fallback={
+  "photosynthesis-gas":["ثاني أكسيد الكربون","الأكسجين","النيتروجين","الهيدروجين"],
+  "plant-pigment":["الكلوروفيل","الكاروتين","الزانثوفيل","الأنثوسيانين"],
+  galaxy:["درب التبانة","مجرة أندروميدا","مجرة المثلث","سحابة ماجلان الكبرى"],
+  "light-speed":["300 ألف كيلومتر في الثانية","150 ألف كيلومتر في الثانية","30 ألف كيلومتر في الثانية","3 آلاف كيلومتر في الثانية"],
+  "genetic-material":["الحمض النووي DNA","الحمض النووي RNA","البروتين","الدهون"],
+  "cell-division":["الانقسام المتساوي","الانقسام المنصف","التبرعم","الانشطار الثنائي"],
+  organ:["الكليتان","الكبد","الرئتان","القلب"],
+  "python-extension":[".py",".js",".java",".rb"],
+  "web-extension":[".html",".css",".js",".php"],
   "email-protocol":["SMTP","IMAP","POP3","HTTP"],
   dns:["DNS","DHCP","FTP","SSH"],
   "wireless-tech":["Bluetooth","NFC","Wi-Fi","Infrared"],
@@ -339,7 +348,9 @@
  const generated=BANK.map(x=>{
   const k=family(x.cat,x.prompt),candidates=[...(familyPools.get(k)||[]),...(fallback[k]||[])];
   const source=x.explicitWrong?x.explicitWrong:candidates;
-  const wrong=sh([...new Set(source)].filter(a=>a!==x.answer)).slice(0,3);
+  const yearValue=k==="year"?Number(String(x.answer).replace(/[^0-9]/g,"")):NaN;
+  const yearChoices=Number.isFinite(yearValue)&&yearValue>0?[yearValue-1,yearValue+1,yearValue+5].map(String):[];
+  const wrong=sh([...new Set(k==="year"&&!x.explicitWrong?yearChoices:source)].filter(a=>a!==x.answer)).slice(0,3);
   if(wrong.length!==3)throw new Error("مشتتات غير كافية للسؤال: "+x.prompt+" ("+k+")");
   const opts=sh([x.answer,...wrong]);
   return [x.cat,x.level,x.prompt,opts,opts.indexOf(x.answer)];

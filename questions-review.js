@@ -99,6 +99,13 @@
  if(grammar)grammar[2]="أيّ حرف ناسخ يُستعمل غالبًا لتوكيد الجملة الاسمية عند ابتدائها؟";
  const serve=Q.find(q=>q[2]==="في أي رياضة تُستخدم كلمة «ضربة إرسال»؟");
  if(serve)serve[2]="في أي رياضة تُفتتح الأشواط عادةً بإرسال اللاعب للكرة فوق الشبكة بمضرب؟";
+ // الأعداد الذرية: استبدال المشتتات البعيدة جدًا بأعداد ذرية مجاورة.
+ for(const q of Q){
+  if(q[0]==="علوم"&&/العدد الذري/.test(q[2])){
+   const n=Number(correct(q));
+   if(Number.isInteger(n)&&n>0){const wrong=[n-1,n+1,n+2].filter(x=>x>0).slice(0,3).map(String);while(wrong.length<3)wrong.push(String(n+3+wrong.length));q[3]=[String(n),...wrong];q[4]=0;}
+  }
+ }
  const mate=Q.find(q=>q[2]==="ما الرياضة التي يُستخدم فيها مصطلح كش مات؟");
  if(mate){mate[3]=["الشطرنج","الداما","البريدج","الطاولة"];mate[4]=0;}
 })();
